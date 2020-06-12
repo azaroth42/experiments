@@ -2,11 +2,13 @@
 import json
 import os
 
+# For visualization, see:  https://observablehq.com/@azaroth42/hierarchical-edge-bundling
+
 model_configs = {}
 
 class_colors = {
-	"Person": "red", 
-	"Group": "red",
+	"Person": "#E02020", 
+	"Group": "#E02020",
 	"Activity": "#4050FF",
 	"Place": "green",
 	"Physical Thing": "#8B4513",
@@ -20,19 +22,6 @@ class_colors = {
 	"Digital Resources": "purple"
 }
 
-
-
-# mermaid.append("classDef object stroke:black,fill:#E1BA9C,rx:20px,ry:20px;")
-# mermaid.append("classDef actor stroke:black,fill:#FFBDCA,rx:20px,ry:20px;")
-# mermaid.append("classDef type stroke:red,fill:#FAB565,rx:20px,ry:20px;")
-# mermaid.append("classDef name stroke:orange,fill:#FEF3BA,rx:20px,ry:20px;")
-# mermaid.append("classDef dims stroke:black,fill:#c6c6c6,rx:20px,ry:20px;")
-# mermaid.append("classDef infoobj stroke:#907010,fill:#fffa40,rx:20px,ry:20px")
-# mermaid.append("classDef timespan stroke:blue,fill:#ddfffe,rx:20px,ry:20px")
-# mermaid.append("classDef place stroke:#3a7a3a,fill:#aff090,rx:20px,ry:20px")
-# mermaid.append("classDef event stroke:blue,fill:#96e0f6,rx:20px,ry:20px")
-# mermaid.append("classDef literal stroke:black,fill:#f0f0e0;")
-# mermaid.append("classDef classstyle stroke:black,fill:white;")
 
 def make_readable(prop):
 	prop = prop.replace('http://www.cidoc-crm.org/cidoc-crm/', 'crm:')
