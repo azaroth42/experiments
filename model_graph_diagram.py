@@ -5,13 +5,19 @@ import os
 model_configs = {}
 
 class_colors = {
-	"Person": "#FFBDCA", 
-	"Group": "#FFBDCA",
-	"Activity": "#96e0f6",
-	"Place": "#aff090",
-	"Physical Thing": "#E1BA9C",
-	"Textual Work": "#fffa40",
-	"Visual Work": "#fffa40"
+	"Person": "red", 
+	"Group": "red",
+	"Activity": "blue",
+	"Place": "green",
+	"Physical Thing": "brown",
+	"Textual Work": "orange",
+	"Visual Work": "orange",
+	"Observation": "blue",
+	"Provenance Activity": "blue",
+	"Modification": "blue",
+	"Instrument": "brown",
+	"Collection or Set": "orange",
+	"Digital Resources": "purple"
 }
 
 # mermaid.append("classDef object stroke:black,fill:#E1BA9C,rx:20px,ry:20px;")
