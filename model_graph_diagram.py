@@ -109,6 +109,7 @@ for (d, info) in model_configs.items():
 			continue
 		for p in pths:		
 			kn = "/".join(p[2::3])
+			crmp = "/".join(p[::3])
 			kn = kn[0].upper() + kn[1:]
 			rn = model_configs[r]['name']
 			done = 0
@@ -119,7 +120,7 @@ for (d, info) in model_configs.items():
 					done = 1
 					break
 			if not done:
-				kid = {"name": kn, "size": 800, "imports": [f"arches.{rn}._{rn}"], 'color': class_colors.get(mname, "black")}
+				kid = {"name": kn, "size": 800, "imports": [f"arches.{rn}._{rn}"], 'color': class_colors.get(mname, "black"), 'description': crmp}
 				h['children'].append(kid)
 	heb['children'].append(h)
 
