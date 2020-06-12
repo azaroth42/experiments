@@ -81,7 +81,7 @@ for d in model_configs.keys():
 for (d, info) in model_configs.items():
 
 	h = {"name": model_configs[d]['name'], 'children': []}
-	h['children'].append({"name": "_" + model_configs[d]['name'],'size':2000,'imports':[]})
+	h['children'].append({"name": "_" + model_configs[d]['name'],'size':2000,'imports':[], 'color': "#e0a0e0"})
 
 	for (r, pths) in info['resinst'].items():
 		if not r in model_configs:
@@ -99,7 +99,7 @@ for (d, info) in model_configs.items():
 					done = 1
 					break
 			if not done:
-				kid = {"name": kn, "size": 800, "imports": [f"arches.{rn}._{rn}"]}
+				kid = {"name": kn, "size": 800, "imports": [f"arches.{rn}._{rn}"], 'color': '#101010'}
 				h['children'].append(kid)
 	heb['children'].append(h)
 
