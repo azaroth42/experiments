@@ -4,6 +4,28 @@ import os
 
 model_configs = {}
 
+class_colors = {
+	"Person": "#FFBDCA", 
+	"Group": "#FFBDCA",
+	"Activity": "#96e0f6",
+	"Place": "#aff090",
+	"Physical Thing": "#E1BA9C",
+	"Textual Work": "#fffa40",
+	"Visual Work": "#fffa40"
+}
+
+# mermaid.append("classDef object stroke:black,fill:#E1BA9C,rx:20px,ry:20px;")
+# mermaid.append("classDef actor stroke:black,fill:#FFBDCA,rx:20px,ry:20px;")
+# mermaid.append("classDef type stroke:red,fill:#FAB565,rx:20px,ry:20px;")
+# mermaid.append("classDef name stroke:orange,fill:#FEF3BA,rx:20px,ry:20px;")
+# mermaid.append("classDef dims stroke:black,fill:#c6c6c6,rx:20px,ry:20px;")
+# mermaid.append("classDef infoobj stroke:#907010,fill:#fffa40,rx:20px,ry:20px")
+# mermaid.append("classDef timespan stroke:blue,fill:#ddfffe,rx:20px,ry:20px")
+# mermaid.append("classDef place stroke:#3a7a3a,fill:#aff090,rx:20px,ry:20px")
+# mermaid.append("classDef event stroke:blue,fill:#96e0f6,rx:20px,ry:20px")
+# mermaid.append("classDef literal stroke:black,fill:#f0f0e0;")
+# mermaid.append("classDef classstyle stroke:black,fill:white;")
+
 def make_readable(prop):
 	prop = prop.replace('http://www.cidoc-crm.org/cidoc-crm/', 'crm:')
 	prop = prop.replace('https://linked.art/ns/terms/', 'la:')
@@ -80,8 +102,9 @@ for d in model_configs.keys():
 
 for (d, info) in model_configs.items():
 
-	h = {"name": model_configs[d]['name'], 'children': []}
-	h['children'].append({"name": "_" + model_configs[d]['name'],'size':2000,'imports':[], 'color': "#e0a0e0"})
+	mname = model_configs[d]['name']
+	h = {"name": mname, 'children': []}
+	h['children'].append({"name": "_" + model_configs[d]['name'],'size':2000,'imports':[], 'color': class_colors.get(mname, "black")})
 
 	for (r, pths) in info['resinst'].items():
 		if not r in model_configs:
@@ -99,7 +122,7 @@ for (d, info) in model_configs.items():
 					done = 1
 					break
 			if not done:
-				kid = {"name": kn, "size": 800, "imports": [f"arches.{rn}._{rn}"], 'color': '#101010'}
+				kid = {"name": kn, "size": 800, "imports": [f"arches.{rn}._{rn}"], 'color': '#105010'}
 				h['children'].append(kid)
 	heb['children'].append(h)
 
