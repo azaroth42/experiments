@@ -101,7 +101,9 @@ for (d, info) in model_configs.items():
 
 	mname = model_configs[d]['name']
 	h = {"name": mname, 'children': []}
-	h['children'].append({"name": "_" + model_configs[d]['name'],'size':2000,'imports':[], 'color': class_colors.get(mname, "black")})
+	cl = info['nodes'][info['top']]['class']
+	h['children'].append({"name": "_" + model_configs[d]['name'],'size':2000,'imports':[], 
+		'color': class_colors.get(mname, "black"), 'description': cl})
 
 	for (r, pths) in info['resinst'].items():
 		if not r in model_configs:
