@@ -7,15 +7,15 @@ model_configs = {}
 class_colors = {
 	"Person": "red", 
 	"Group": "red",
-	"Activity": "blue",
+	"Activity": "#4050FF",
 	"Place": "green",
-	"Physical Thing": "brown",
+	"Physical Thing": "#8B4513",
 	"Textual Work": "orange",
 	"Visual Work": "orange",
-	"Observation": "blue",
-	"Provenance Activity": "blue",
-	"Modification": "blue",
-	"Instrument": "brown",
+	"Observation": "#4050FF",
+	"Provenance Activity": "#4050FF",
+	"Modification": "#4050FF",
+	"Instrument": "#8B4513",
 	"Collection or Set": "orange",
 	"Digital Resources": "purple"
 }
