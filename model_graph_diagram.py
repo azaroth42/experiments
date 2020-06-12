@@ -20,6 +20,8 @@ class_colors = {
 	"Digital Resources": "purple"
 }
 
+
+
 # mermaid.append("classDef object stroke:black,fill:#E1BA9C,rx:20px,ry:20px;")
 # mermaid.append("classDef actor stroke:black,fill:#FFBDCA,rx:20px,ry:20px;")
 # mermaid.append("classDef type stroke:red,fill:#FAB565,rx:20px,ry:20px;")
@@ -128,7 +130,7 @@ for (d, info) in model_configs.items():
 					done = 1
 					break
 			if not done:
-				kid = {"name": kn, "size": 800, "imports": [f"arches.{rn}._{rn}"], 'color': '#105010'}
+				kid = {"name": kn, "size": 800, "imports": [f"arches.{rn}._{rn}"], 'color': class_colors.get(mname, "black")}
 				h['children'].append(kid)
 	heb['children'].append(h)
 
