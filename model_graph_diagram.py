@@ -2,9 +2,6 @@
 import json
 import os
 
-
-# data = d3.json("https://raw.githubusercontent.com/azaroth42/experiments/master/d3_heb2.json")
-
 model_configs = {}
 
 def make_readable(prop):
@@ -19,7 +16,7 @@ def traverse(config, node, path):
 		dmn = config['nodes'][o[1]]
 		mypath.extend([o[0], dmn['class'], dmn['name']])
 		if dmn['datatype'] in ['resource-instance', 'resource-instance-list'] and dmn['target']:
-			if dmn['name'] != "source":			
+			if not "_source" in dmn['name'] and not dmn['name'] == 'source':			
 				for t in dmn['target']:
 					try:
 						config['resinst'][t].append(mypath)
@@ -28,43 +25,46 @@ def traverse(config, node, path):
 		traverse(config, o[1], mypath)
 
 
-for m in os.listdir('models'):
-	with open(f"models/{m}") as fh:
-		js = json.load(fh)
+path = "/Users/rsanderson/Development/getty/arches/current/projects/arches-for-science-prj/afs/pkg/graphs/resource_models"
 
-		graph = js['graph'][0]
+for m in os.listdir(path):
+	if m.endswith('.json'):
+		with open(os.path.join(path, m)) as fh:
+			js = json.load(fh)
 
-		if not graph['isactive']:
-			continue
+			graph = js['graph'][0]
 
-		me = graph['root']['graph_id']
-		model_configs[me] = {"name": graph['root']['name'], "top": graph['root']['nodeid'], "resinst": {}}
-		nodes = graph['nodes']
-		edges = graph['edges']
+			if not graph['isactive']:
+				continue
 
-		node_info = {}
-		for n in nodes:
-			try:
-				target = n['config']['graphid']
-			except:
-				target = None
-			node_info[n['nodeid']] = {
-				'class': make_readable(n['ontologyclass']),
-				'name': n['name'],
-				'datatype': n['datatype'],
-				'target': target,
-				'in': [], 'out': []}
+			me = graph['root']['graph_id']
+			model_configs[me] = {"name": graph['root']['name'], "top": graph['root']['nodeid'], "resinst": {}}
+			nodes = graph['nodes']
+			edges = graph['edges']
 
-		for e in edges:
-			dmn = e['domainnode_id']
-			rng = e['rangenode_id']
-			prop = make_readable(e['ontologyproperty'])
-			node_info[dmn]['out'].append((prop, rng))
-			node_info[rng]['in'].append((prop, dmn))
+			node_info = {}
+			for n in nodes:
+				try:
+					target = n['config']['graphid']
+				except:
+					target = None
+				node_info[n['nodeid']] = {
+					'class': make_readable(n['ontologyclass']),
+					'name': n['name'],
+					'datatype': n['datatype'],
+					'target': target,
+					'in': [], 'out': []}
 
-		model_configs[me]['nodes'] = node_info
+			for e in edges:
+				dmn = e['domainnode_id']
+				rng = e['rangenode_id']
+				prop = make_readable(e['ontologyproperty'])
+				node_info[dmn]['out'].append((prop, rng))
+				node_info[rng]['in'].append((prop, dmn))
 
-		traverse(model_configs[me], model_configs[me]['top'], [])
+			model_configs[me]['nodes'] = node_info
+
+			traverse(model_configs[me], model_configs[me]['top'], [])
 
 
 # Now generate diagram
@@ -103,6 +103,6 @@ for (d, info) in model_configs.items():
 				h['children'].append(kid)
 	heb['children'].append(h)
 
-fh = open("d3_heb2.json", 'w')
+fh = open("d3_heb_afs.json", 'w')
 fh.write(json.dumps(heb))
 fh.close()
