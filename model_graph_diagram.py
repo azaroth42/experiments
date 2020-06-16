@@ -34,15 +34,15 @@ def traverse(config, node, path):
 		mypath = path[:]
 		dmn = config['nodes'][o[1]]
 		mypath.extend([o[0], dmn['class'], dmn['name']])
+		desc = dmn['description']
 		if dmn['datatype'] in ['resource-instance', 'resource-instance-list'] and dmn['target']:
 			if not "_source" in dmn['name'] and not dmn['name'] == 'source':			
 				for t in dmn['target']:
 					try:
-						config['resinst'][t].append((mypath, dmn['description']))
+						config['resinst'][t].append((mypath, desc))
 					except:
-						config['resinst'][t] = [(mypath, dmn['description'])]
+						config['resinst'][t] = [(mypath, desc)]
 		traverse(config, o[1], mypath)
-
 
 path = "/Users/rsanderson/Development/getty/arches/current/projects/arches-for-science-prj/backup"
 
