@@ -38,9 +38,9 @@ def traverse(config, node, path):
 			if not "_source" in dmn['name'] and not dmn['name'] == 'source':			
 				for t in dmn['target']:
 					try:
-						config['resinst'][t].append(mypath)
+						config['resinst'][t].append((mypath, dmn['description']))
 					except:
-						config['resinst'][t] = [mypath]
+						config['resinst'][t] = [(mypath, dmn['description'])]
 		traverse(config, o[1], mypath)
 
 
@@ -50,9 +50,7 @@ for m in os.listdir(path):
 	if m.endswith('.json'):
 		with open(os.path.join(path, m)) as fh:
 			js = json.load(fh)
-
 			graph = js['graph'][0]
-
 			if not graph['isactive']:
 				continue
 
@@ -115,10 +113,11 @@ for (d, info) in model_configs.items():
 			# inactive model
 			continue
 		for p in pths:		
-			kn = "/".join(p[2::3])
-			crmp = "/".join(p[::3])
+			kn = "/".join(p[0][2::3])
+			crmp = "/".join(p[0][::3])
 			kn = kn[0].upper() + kn[1:]
 			rn = model_configs[r]['name']
+			desc = p[1]
 			done = 0
 			for k in h['children']:
 				# check if already exists
@@ -128,7 +127,7 @@ for (d, info) in model_configs.items():
 					break
 			if not done:
 				kid = {"name": kn, "size": 800, "imports": [f"arches.{rn}._{rn}"], 'color': class_colors.get(mname, "black"), 
-					'ontology': crmp, 'description': k['description']}
+					'ontology': crmp, 'description': desc}
 				h['children'].append(kid)
 	heb['children'].append(h)
 
