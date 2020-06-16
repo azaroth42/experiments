@@ -117,7 +117,7 @@ for (d, info) in model_configs.items():
 			crmp = "/".join(p[0][::3])
 			kn = kn[0].upper() + kn[1:]
 			rn = model_configs[r]['name']
-			desc = p[1]
+			desc = p[1] if p[1] else ""
 			done = 0
 			for k in h['children']:
 				# check if already exists
