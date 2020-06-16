@@ -44,7 +44,7 @@ def traverse(config, node, path):
 		traverse(config, o[1], mypath)
 
 
-path = "/Users/rsanderson/Development/getty/arches/current/projects/arches-for-science-prj/afs/pkg/graphs/resource_models"
+path = "/Users/rsanderson/Development/getty/arches/current/projects/arches-for-science-prj/backup"
 
 for m in os.listdir(path):
 	if m.endswith('.json'):
@@ -57,7 +57,11 @@ for m in os.listdir(path):
 				continue
 
 			me = graph['root']['graph_id']
-			model_configs[me] = {"name": graph['root']['name'], "top": graph['root']['nodeid'], "resinst": {}}
+			model = {"name": graph['root']['name'], "top": graph['root']['nodeid'], "resinst": {}}
+			model['description'] = graph['description']
+			model['subtitle'] = graph['subtitle']
+			model_configs[me] = model
+
 			nodes = graph['nodes']
 			edges = graph['edges']
 
@@ -72,6 +76,7 @@ for m in os.listdir(path):
 					'name': n['name'],
 					'datatype': n['datatype'],
 					'target': target,
+					'description': n['description'],
 					'in': [], 'out': []}
 
 			for e in edges:
@@ -103,7 +108,7 @@ for (d, info) in model_configs.items():
 	h = {"name": mname, 'children': []}
 	cl = info['nodes'][info['top']]['class']
 	h['children'].append({"name": "_" + model_configs[d]['name'],'size':2000,'imports':[], 
-		'color': class_colors.get(mname, "black"), 'description': cl})
+		'color': class_colors.get(mname, "black"), 'ontology': cl, 'description': model_configs[d]['description']})
 
 	for (r, pths) in info['resinst'].items():
 		if not r in model_configs:
@@ -122,7 +127,8 @@ for (d, info) in model_configs.items():
 					done = 1
 					break
 			if not done:
-				kid = {"name": kn, "size": 800, "imports": [f"arches.{rn}._{rn}"], 'color': class_colors.get(mname, "black"), 'description': crmp}
+				kid = {"name": kn, "size": 800, "imports": [f"arches.{rn}._{rn}"], 'color': class_colors.get(mname, "black"), 
+					'ontology': crmp, 'description': k['description']}
 				h['children'].append(kid)
 	heb['children'].append(h)
 
